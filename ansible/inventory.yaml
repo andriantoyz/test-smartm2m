@@ -1,0 +1,17 @@
+---
+all:
+  children:
+    loadbalancer:
+      hosts:
+        node1:
+          ansible_host:
+    vars: 
+      description: Loadbalancer node
+
+    backend:
+      hosts:
+        node2:
+          ansible_host:
+        node3:
+          ansible_host:
+      vars: Backend nodes

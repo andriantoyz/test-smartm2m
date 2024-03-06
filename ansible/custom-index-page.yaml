@@ -1,0 +1,16 @@
+---
+- name: Change Nginx Default Index Page
+  hosts: backend
+  become: true
+  tasks:
+    - name: Create custom index.html file
+      template:
+        src: templates/index.html.j2
+        dest: /var/www/html/index.html
+      notify: Restart Nginx
+
+  handlers:
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted

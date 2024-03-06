@@ -1,0 +1,23 @@
+---
+- name: Configure Nginx as Load Balancer
+  hosts: loadbalancer
+  become: true
+  tasks:
+
+    - name: Configure Nginx as a Load Balancer
+      template:
+        src: templates/loadbalancer.conf.j2
+        dest: /etc/nginx/sites-available/loadbalancer.conf
+      notify: Reload Nginx
+
+    - name: Enable the Load Balancer configuration
+      file:
+        src: /etc/nginx/sites-available/loadbalancer.conf
+        dest: /etc/nginx/sites-enabled/loadbalancer.conf
+        state: link
+
+  handlers:
+    - name: Reload Nginx
+      service:
+        name: nginx
+        state: reloaded
